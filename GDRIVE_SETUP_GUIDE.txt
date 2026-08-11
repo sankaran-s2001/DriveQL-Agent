@@ -1,0 +1,73 @@
+========================================================================
+             GOOGLE DRIVE & SERVICE ACCOUNT SETUP GUIDE
+========================================================================
+
+The application uses a Google Service Account to securely access and download 
+spreadsheets from your Google Drive without asking for personal Google login credentials.
+
+If you want to use your own Google Drive folder and files, follow these 
+step-by-step instructions.
+
+------------------------------------------------------------------------
+STEP 1: CREATE A GOOGLE CLOUD PROJECT & ENABLE GOOGLE DRIVE API
+------------------------------------------------------------------------
+1. Go to the Google Cloud Console:
+   https://console.cloud.google.com/
+2. Log in with your Google account.
+3. In the top navigation bar, click the project selector dropdown and select 
+   "New Project". Name it (e.g. "DriveQL Project") and click "Create".
+4. Once the project is created, click "Enable APIs and Services" in your 
+   dashboard, or search for "Google Drive API" in the top search bar.
+5. Click on "Google Drive API" and click the blue "Enable" button.
+
+------------------------------------------------------------------------
+STEP 2: CREATE A SERVICE ACCOUNT & DOWNLOAD JSON KEY
+------------------------------------------------------------------------
+1. In the left navigation menu of the Cloud Console, select:
+   IAM & Admin -> Service Accounts
+2. Click "Create Service Account" at the top of the page.
+3. Fill in the details:
+   - Service account name: drive-reader-agent
+   - Service account ID: (auto-generated)
+4. Click "Create and Continue", click "Select a role" and choose:
+   Basic -> Viewer (or Editor)
+5. Click "Continue" and then click "Done".
+6. In the list, click on the newly created Service Account.
+7. Click the "Keys" tab at the top.
+8. Click "Add Key" -> "Create new key".
+9. Choose "JSON" format and click "Create".
+10. A `.json` file will automatically download to your computer.
+
+------------------------------------------------------------------------
+STEP 3: SAVE KEY TO THE PROJECT
+------------------------------------------------------------------------
+1. Rename the downloaded JSON file to exactly:
+   service_account.json
+2. Move this file into the "credentials" folder in your project directory:
+   credentials/service_account.json
+   (Note: Overwrite the existing template/placeholder file if any).
+
+------------------------------------------------------------------------
+STEP 4: SHARE YOUR GOOGLE DRIVE FOLDER
+------------------------------------------------------------------------
+1. Open the JSON key file in a text editor to find the field:
+   "client_email": "drive-reader-agent@your-project-id.iam.gserviceaccount.com"
+2. Copy this service account email address.
+3. Open your web browser and go to Google Drive.
+4. Right-click the folder containing your spreadsheets, select "Share", and 
+   paste the Service Account email address.
+5. Set its permission to "Viewer" (or "Editor") and click "Send".
+   (Uncheck "Notify people" if you prefer).
+
+------------------------------------------------------------------------
+STEP 5: UPDATE CONFIGURATION (.ENV)
+------------------------------------------------------------------------
+1. Open the folder containing your Google Drive spreadsheets in your browser.
+2. Look at the URL in the browser address bar. It looks like:
+   https://drive.google.com/drive/folders/YOUR_FOLDER_ID
+3. Copy the string of letters and numbers at the end (YOUR_FOLDER_ID).
+4. Open the ".env" file in your project folder using a text editor.
+5. Edit the variable:
+   GDRIVE_FOLDER_ID=paste_your_folder_id_here
+6. Save the file and restart the application using "run.bat".
+========================================================================
