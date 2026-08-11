@@ -1,0 +1,64 @@
+========================================================================
+           GMAIL SMTP & APP PASSWORD SETUP GUIDE
+========================================================================
+
+For security reasons, Google does not allow external applications to sign 
+in using your standard Google/Gmail password. Instead, you must generate a 
+temporary, secure "App Password" to allow this agent to send reports.
+
+Please follow these step-by-step instructions to configure your own Gmail 
+as the sender.
+
+------------------------------------------------------------------------
+STEP 1: ENABLE 2-STEP VERIFICATION (REQUIRED)
+------------------------------------------------------------------------
+1. Open your web browser and go to your Google Account dashboard:
+   https://myaccount.google.com
+2. Click on the "Security" tab on the left-side menu.
+3. Scroll down to the "How you sign in to Google" section.
+4. Locate "2-Step Verification":
+   - If it is already ON, proceed to STEP 2.
+   - If it is OFF, click on it, follow the prompts to turn it ON (linking 
+     your phone number), and then return to the Security tab.
+
+------------------------------------------------------------------------
+STEP 2: GENERATE GMAIL APP PASSWORD
+------------------------------------------------------------------------
+1. In the "Security" tab, click directly on "2-Step Verification".
+2. Scroll to the very bottom of the page and click on "App passwords".
+3. Under "App name", enter a descriptive identifier, such as:
+   DriveQL Agent
+4. Click the "Create" button.
+5. A popup window will display a 16-character App Password inside a 
+   yellow box (example: "abcd efgh ijkl mnop").
+6. Copy this password and save it somewhere secure. (Note: Google will 
+   only display this code once; once closed, you cannot view it again).
+
+------------------------------------------------------------------------
+STEP 3: CONFIGURE THE .ENV FILE
+------------------------------------------------------------------------
+1. Navigate to your project folder on your computer.
+2. Open the file named ".env" in any text editor (like Notepad).
+3. Locate the SMTP section and update the values:
+
+   # Your Gmail address:
+   SMTP_USERNAME=your_address@gmail.com
+
+   # Paste the 16-character code (remove spaces if any, e.g. abcdefghijklmnop):
+   SMTP_PASSWORD=your_16_character_app_password
+
+   # Match this with your Gmail address:
+   EMAIL_FROM=your_address@gmail.com
+
+4. Save the file and close the text editor.
+
+------------------------------------------------------------------------
+STEP 4: LAUNCH AND TEST
+------------------------------------------------------------------------
+1. Double-click the "run.bat" file in the project folder to boot the app.
+2. In the Streamlit browser dashboard, enter your custom recipient email 
+   in the sidebar "Recipient Config" panel.
+3. Click "Run Analytics & Generate Report" to execute the queries.
+4. In the "HTML Report Preview" tab, click "Send HTML Report via Email".
+5. Verify the inbox of the recipient to check that the report has arrived!
+========================================================================
