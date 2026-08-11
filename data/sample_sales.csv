@@ -1,0 +1,6 @@
+Order_ID,Region,Customer_Segment,Product,Sales
+1001,South,Retail,Laptop,55000
+1002,North,Corporate,Mouse,1200
+1003,South,Retail,Keyboard,3500
+1004,West,SMB,Monitor,18000
+1005,North,Corporate,Laptop,62000

@@ -1,0 +1,70 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+venv/
+.venv/
+gdrive_sql/
+gdrive_agent_env/
+ENV/
+env/
+
+# Project state & caches
+.project_state/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Local configuration and API secrets
+.env
+credentials/*.json
+!credentials/.gitkeep
+
+# Local databases and runtime downloads
+data/*.db
+data/downloads/
+!data/.gitkeep
+!data/*.csv
+
+# Output and Logs directories
+output/*.html
+logs/
+*.log
+
+# Editor/IDE settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS generated files
+Thumbs.db
+db.db
+Desktop.ini
