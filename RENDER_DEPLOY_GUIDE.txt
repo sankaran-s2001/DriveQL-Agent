@@ -1,0 +1,85 @@
+========================================================================
+                 RENDER CLOUD SERVICE DEPLOYMENT GUIDE
+========================================================================
+
+Follow these step-by-step instructions to deploy the Streamlit Dashboard 
+fully on Render (Web Service Hosting).
+
+------------------------------------------------------------------------
+STEP 1: PREPARE YOUR SERVICE ACCOUNT CREDENTIALS
+------------------------------------------------------------------------
+For security reasons, we do not upload the "credentials/service_account.json" 
+file to GitHub. Instead, we will pass it as a secure environment variable.
+
+1. Open your "credentials/service_account.json" file using any text editor 
+   (like Notepad).
+2. Copy the entire text content (the whole JSON string). Keep it ready.
+
+------------------------------------------------------------------------
+STEP 2: CREATE A RENDER WEB SERVICE
+------------------------------------------------------------------------
+1. Go to the Render dashboard and sign in:
+   https://dashboard.render.com/
+2. Click the "New +" button in the top right and select "Web Service".
+3. Under "Connect a repository", search for and select your repository:
+   sankaran-s2001/DriveQL-Agent
+4. Configure the settings:
+   - Name: driveql-agent (or any custom name)
+   - Region: Select a region close to you (e.g., Oregon, Frankfurt)
+   - Branch: main
+   - Runtime: Python
+   - Build Command: pip install -r requirements.txt
+   - Start Command: 
+     streamlit run streamlit_app.py --server.port $PORT --server.address 0.0.0.0
+
+   *(Note: The start command must bind to the dynamic "$PORT" variable 
+     provided by Render's environment, and listen on address "0.0.0.0".)*
+
+------------------------------------------------------------------------
+STEP 3: ADD ENVIRONMENT VARIABLES & SECRETS
+------------------------------------------------------------------------
+1. Scroll down to the "Environment Variables" section on the creation page 
+   (or navigate to the "Environment" tab in your service dashboard).
+2. Click "Add Environment Variable" and add the following keys and values:
+
+   KEY: GOOGLE_API_KEY
+   VALUE: (Your Google Gemini AI Studio API Key)
+
+   KEY: GDRIVE_FOLDER_ID
+   VALUE: (Your Google Drive Folder Resource ID)
+
+   KEY: GOOGLE_SERVICE_ACCOUNT_JSON
+   VALUE: (Paste the entire text content of service_account.json copied in STEP 1)
+
+   KEY: SQLITE_DB_PATH
+   VALUE: data/agent_database.db
+
+   *(Optional SMTP Configuration for reports)*
+   KEY: SMTP_HOST
+   VALUE: smtp.gmail.com
+
+   KEY: SMTP_PORT
+   VALUE: 587
+
+   KEY: SMTP_USERNAME
+   VALUE: (Your dummy Gmail address)
+
+   KEY: SMTP_PASSWORD
+   VALUE: (Your 16-character Gmail App Password)
+
+   KEY: EMAIL_FROM
+   VALUE: (Your dummy Gmail address)
+
+------------------------------------------------------------------------
+STEP 4: DEPLOY AND LAUNCH
+------------------------------------------------------------------------
+1. Select the "Free" tier plan (or any plan you prefer).
+2. Click "Deploy Web Service" at the bottom of the page.
+3. Render will begin building:
+   - It clones your repository.
+   - Installs libraries from requirements.txt.
+   - Launches the Streamlit dashboard on the assigned PORT.
+4. Watch the logs. Once it reports "Your service is live!", click on the 
+   URL shown at the top of the Render screen (e.g. https://driveql-agent.onrender.com).
+5. The browser will open and display your active analytics dashboard!
+========================================================================
