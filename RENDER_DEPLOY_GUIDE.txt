@@ -82,4 +82,21 @@ STEP 4: DEPLOY AND LAUNCH
 4. Watch the logs. Once it reports "Your service is live!", click on the 
    URL shown at the top of the Render screen (e.g. https://driveql-agent.onrender.com).
 5. The browser will open and display your active analytics dashboard!
+
+------------------------------------------------------------------------
+⚠️ IMPORTANT NOTE ON SMTP EMAIL DELIVERY (RENDER FREE TIER LIMITATION)
+------------------------------------------------------------------------
+By default, Render blocks outbound SMTP ports (including 587, 465, and 25) 
+on all Free Web Service instances to prevent spam abuse. 
+
+If you attempt to send an email report on the Render Free Tier, you will 
+encounter an error: "[Errno 101] Network is unreachable".
+
+Workarounds:
+1. Run Locally: Download the project and double-click "run.bat". Local 
+   home networks do not block SMTP, and emails will send successfully.
+2. Paid Instance: Upgrade your Render Web Service to a paid instance tier 
+   (e.g., Starter plan). Paid instances do not have SMTP port restrictions.
+3. Use Email API: Update the codebase to send emails via an HTTP-based API 
+   (like Resend or SendGrid) instead of standard SMTP.
 ========================================================================
