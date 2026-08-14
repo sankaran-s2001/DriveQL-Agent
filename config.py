@@ -5,6 +5,18 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Write Google Service Account JSON content dynamically if passed in environment (useful for Render deployment)
+g_account_json = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON")
+if g_account_json:
+    cred_file_path = os.getenv("GOOGLE_SERVICE_ACCOUNT_FILE", "credentials/service_account.json")
+    try:
+        Path(cred_file_path).parent.mkdir(parents=True, exist_ok=True)
+        with open(cred_file_path, "w", encoding="utf-8") as f:
+            f.write(g_account_json)
+    except Exception as e:
+        import sys
+        print(f"Warning: Failed to write GOOGLE_SERVICE_ACCOUNT_JSON to disk: {str(e)}", file=sys.stderr)
+
 
 class StartupValidationError(Exception):
     """Raised when application startup configuration checks fail."""
