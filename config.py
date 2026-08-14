@@ -89,8 +89,15 @@ class Settings:
             test_file = db_path.parent / ".startup_write_test"
             test_file.touch(exist_ok=True)
             test_file.unlink(missing_ok=True)
+            
+            # Create a blank SQLite database file if it does not exist
+            # This prevents read-only connection opens (mode=ro) from throwing errors
+            if not db_path.exists():
+                import sqlite3
+                conn = sqlite3.connect(str(db_path))
+                conn.close()
         except Exception as e:
-            errors.append(f"SQLite database destination folder is not writeable: {db_path.parent}. Error: {str(e)}")
+            errors.append(f"SQLite database destination folder is not writeable or file creation failed: {db_path.parent}. Error: {str(e)}")
 
         # 5. SMTP/Email settings validation
         if self.smtp_username:
